@@ -9,8 +9,10 @@ public class CameraScript : MonoBehaviour
     bool followingPlayer = true;
     
     void Awake(){
+        //If there's another, this one shouldn't exist
         if(cameraScript != null)
             Destroy(gameObject);
+        //Otherwise, become the one
         cameraScript = this;
     }
     
@@ -28,7 +30,7 @@ public class CameraScript : MonoBehaviour
     void Update()
     {
         if(followingPlayer)
-            transform.position = new Vector3(player.position.x, player.position.y, this.transform.position.z);
+            transform.position = new Vector3(player.position.x, player.position.y + 2f, this.transform.position.z);
     }
 
     public void stopFollowing(){

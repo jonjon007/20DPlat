@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
     void perish(){
         CameraScript.cameraScript.stopFollowing();
-        Invoke("loadLevel", 3);        
+        Invoke("loadLevel", 3);
     }
 
     void loadLevel(){
@@ -75,6 +75,13 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter(Collision other){
         if(other.gameObject.CompareTag("Ground"))
             inAir = false;
+    }
+
+    void OnTriggerEnter(Collider other){
+        if(other.gameObject.CompareTag("Item")){
+            ScoreKeeper.sk.addScore(10);
+            Destroy(other.gameObject);
+        }
     }
 
     //Unity's built-in
