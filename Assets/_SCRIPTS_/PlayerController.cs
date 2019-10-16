@@ -26,6 +26,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         drawRays();
+        checkMovement();
+        checkFall();
+    }
+
+    void checkMovement(){
         Vector3 newVel = rb.velocity;
         if(Input.GetKey("left")){
             Vector3 temp = -transform.right*walkSpeed;
@@ -47,9 +52,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void checkFall(){
+        if(transform.position.y < -15)
+            perish();
+    }
+
     void drawRays(){
         groundRay = new Ray (transform.position, -transform.TransformDirection(transform.up)*1.5f);
         Debug.DrawRay (transform.position, -transform.TransformDirection(transform.up)*1.5f, Color.cyan);
+    }
+
+    void perish(){
+        CameraScript.cameraScript.stopFollowing();
+        Invoke("loadLevel", 3);        
+    }
+
+    void loadLevel(){
+        Application.LoadLevel(Application.loadedLevel);
     }
 
     //Unity's built-in
